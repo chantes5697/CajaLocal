@@ -1,0 +1,58 @@
+<UserControl x:Class="CajaLocal.Views.SalesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             IsVisibleChanged="SalesView_IsVisibleChanged">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="4,0,4,12">
+            <TextBlock Text="Historial de ventas" FontSize="23" FontWeight="Bold" Foreground="#172033" />
+            <TextBlock Text="Consulta las operaciones guardadas en este equipo." Foreground="#64748B" Margin="0,4,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="4,0,4,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#F0FDFA" CornerRadius="8" Padding="14" Margin="0,0,8,0">
+                <StackPanel>
+                    <TextBlock Text="VENTAS DE HOY" Foreground="#0F766E" FontSize="12" FontWeight="Bold" />
+                    <TextBlock x:Name="TodayTotalText" Text="$0.00" Foreground="#115E59" FontSize="24" FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Background="#F8FAFC" CornerRadius="8" Padding="14" Margin="8,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="VENTAS ACUMULADAS" Foreground="#475569" FontSize="12" FontWeight="Bold" />
+                    <TextBlock x:Name="AllTimeTotalText" Text="$0.00" Foreground="#172033" FontSize="24" FontWeight="Bold" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <DataGrid Grid.Row="2" x:Name="SalesGrid" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Folio" Binding="{Binding TicketNumber}" Width="190" />
+                <DataGridTextColumn Header="Fecha" Binding="{Binding Date, StringFormat={}{0:dd/MM/yyyy HH:mm:ss}}" Width="190" />
+                <DataGridTextColumn Header="Artículos" Binding="{Binding QuantitySold, StringFormat={}{0:0.##}}" Width="110" />
+                <DataGridTextColumn Header="Pago" Binding="{Binding PaymentMethod}" Width="120" />
+                <DataGridTextColumn Header="Total" Binding="{Binding Total, StringFormat={}{0:C2}}" Width="140" />
+                <DataGridTextColumn Header="Recibido" Binding="{Binding CashReceived, StringFormat={}{0:C2}}" Width="140" />
+                <DataGridTextColumn Header="Cambio" Binding="{Binding Change, StringFormat={}{0:C2}}" Width="140" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DockPanel Grid.Row="3" Margin="0,10,0,0">
+            <TextBlock x:Name="ExcelPathText" Foreground="#64748B" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <Button Content="Actualizar lista" Background="#64748B" Click="Refresh_Click" />
+                <Button Content="Imprimir copia" Background="#475569" Click="Reprint_Click" />
+                <Button Content="Actualizar Excel" Click="Export_Click" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>
